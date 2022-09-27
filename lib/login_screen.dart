@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_friends/main_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key, required this.title});
@@ -43,7 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   width:double.infinity,
                   // ボタン（ログイン）
                   child: ElevatedButton(
-                    onPressed: ()=>{},
+                    onPressed: _onLogin,
                     child: const Text('ログイン'),
                   ),
                 ),
@@ -61,5 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
     );
+  }
+
+  void _onLogin(){
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen(title: widget.title,)));
   }
 }
