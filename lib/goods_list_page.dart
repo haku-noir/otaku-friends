@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_friends/search_bar.dart';
 
 class GoodsListPage extends StatelessWidget {
   const GoodsListPage({super.key});
@@ -13,6 +14,7 @@ class GoodsListPage extends StatelessWidget {
     ];
 
     return Scaffold(
+      appBar: const SearchBar(),
       body: GridView.count(
         crossAxisCount: 3,
         mainAxisSpacing: 8,
