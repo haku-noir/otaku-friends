@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'goods_list_page.dart';
+
 class MainScreen extends StatefulWidget{
   const MainScreen({super.key, required this.title});
 
@@ -27,11 +29,7 @@ class _MainScreenState extends State<MainScreen>{
         controller: _controller,
         onPageChanged: (int index) => _onPageChanged(index),
         children: [
-          Container(
-            child: const Center(
-              child: Text('ページ: 借りる'),
-            ),
-          ),
+          const GoodsListPage(),
           Container(
             child: const Center(
               child: Text('ページ: 貸す'),
