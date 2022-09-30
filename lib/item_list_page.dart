@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:otaku_friends/search_bar.dart';
 
-class GoodsListPage extends StatelessWidget {
-  const GoodsListPage({super.key});
+class ItemListPage extends StatelessWidget {
+  const ItemListPage({super.key});
 
   @override
   Widget build(BuildContext context){

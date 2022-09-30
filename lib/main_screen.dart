@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'goods_list_page.dart';
-import 'goods_publish_page.dart';
+import 'item_list_page.dart';
+import 'item_publish_page.dart';
 
 class MainScreen extends StatefulWidget{
   const MainScreen({super.key, required this.title});
@@ -30,8 +30,8 @@ class _MainScreenState extends State<MainScreen>{
         controller: _controller,
         onPageChanged: (int index) => _onPageChanged(index),
         children: [
-          const GoodsListPage(),
-          const GoodsPublishPage(),
+          const ItemListPage(),
+          const ItemPublishPage(),
           Container(
             child: const Center(
               child: Text('ページ: アカウント'),

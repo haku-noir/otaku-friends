@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class GoodsPublishPage extends StatefulWidget {
-  const GoodsPublishPage({super.key});
+class ItemPublishPage extends StatefulWidget {
+  const ItemPublishPage({super.key});
 
   @override
-  State<GoodsPublishPage> createState() => _GoodsPublishPageState();
+  State<ItemPublishPage> createState() => _ItemPublishPageState();
 }
 
-class _GoodsPublishPageState extends State<GoodsPublishPage> {
+class _ItemPublishPageState extends State<ItemPublishPage> {
   @override
   Widget build(BuildContext context) {
     final List<String> typeList = ['漫画', '小説', 'ブルーレイ', 'CD'];
