@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'goods_list_page.dart';
+import 'goods_publish_page.dart';
 
 class MainScreen extends StatefulWidget{
   const MainScreen({super.key, required this.title});
@@ -30,11 +31,7 @@ class _MainScreenState extends State<MainScreen>{
         onPageChanged: (int index) => _onPageChanged(index),
         children: [
           const GoodsListPage(),
-          Container(
-            child: const Center(
-              child: Text('ページ: 貸す'),
-            ),
-          ),
+          const GoodsPublishPage(),
           Container(
             child: const Center(
               child: Text('ページ: アカウント'),
@@ -45,7 +42,7 @@ class _MainScreenState extends State<MainScreen>{
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.handshake), label: '借りる'),
-          BottomNavigationBarItem(icon: Icon(Icons.image), label: '貸す'),
+          BottomNavigationBarItem(icon: Icon(Icons.outbox), label: '貸す'),
           BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'アカウント'),
         ],
         onTap: (int index) => _onTapBottomNavigationItem(index),

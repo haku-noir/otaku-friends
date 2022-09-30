@@ -21,8 +21,8 @@ class GoodsListPage extends StatelessWidget {
         crossAxisSpacing: 8,
         padding: const EdgeInsets.all(8),
         children: imageList.map((String imageURL) {
-          return Container(
-            color: Colors.grey,
+          return Card(
+            elevation: 3,
             child: SizedBox(
               width: double.infinity,
               height: double.infinity,
