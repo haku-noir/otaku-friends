@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:http_parser/http_parser.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart';
 
@@ -65,4 +66,24 @@ class Network {
     Response res = await get(fullUrl, headers: _getHeaders());
     return res;
   }
+
+  // Future<Response> uploadImage(String apiUrl, image) async {
+  //   await _setToken();
+  //   // ここで画像をFileからBase64（String）にエンコードする
+  //   Uint8List imageBytes = image!.readAsBytesSync();
+  //   String imageBytesBase64 = base64Encode(imageBytes);
+  //
+  //   Uri fullUrl = Uri.parse(_url + apiUrl);
+  //   return await post(fullUrl, body: jsonEncode({image: imageBytesBase64}), headers: _getHeaders());
+  // }
+
+  Future<StreamedResponse> uploadImage(String apiUrl, image) async {
+    Uri fullUrl = Uri.parse(_url + apiUrl);
+    var request = MultipartRequest('POST', fullUrl)
+      ..files.add(await MultipartFile.fromPath(
+          'image', image.path,
+          contentType: MediaType.parse('image/jpeg')));
+    return await request.send();
+  }
+
 }

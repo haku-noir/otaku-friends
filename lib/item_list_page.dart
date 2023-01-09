@@ -4,7 +4,7 @@ import 'package:otaku_friends/search_bar.dart';
 import 'item_detail_page.dart';
 
 final  List<String> imageList = [
-  'https://1.bp.blogspot.com/-CbP8p3DSIn0/UchCDw9ebKI/AAAAAAAAVJg/b3woYTn2mVg/s180-c/manga.png',
+  'http://localhost:8080/storage/images/Cvv3xJi6gBCGcpqt7Bee3KTDqZJrvYBaVw5JpdZa.jpg',
   'https://2.bp.blogspot.com/-CWoHjphCbNQ/Wj4IYnGuK-I/AAAAAAABJKw/V7xQ7KauTx8S5w0JcEazgmvbS7DOhiQiQCLcBGAs/s400/entertainment_novel.png',
   'https://1.bp.blogspot.com/-rrfJjqUUawc/Wj4IYUjnqtI/AAAAAAABJKo/FIkkDbM7wHgAmqPw1GrRA_3cU-n3Hab3gCLcBGAs/s180-c/entertainment_movie.png',
   'https://2.bp.blogspot.com/-WBB2GvUC_rc/Wj4IYUC_E9I/AAAAAAABJKs/iMcEAHMb9oo8IOx7BqQhWqHt9ef33oLTACLcBGAs/s400/entertainment_music.png',

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -122,11 +124,18 @@ class _ItemPublishPageState extends State<ItemPublishPage> {
                           _isLoading = true;
                         });
                         Network().postData('/items', data).then((res){
-                          if(res.statusCode == 201){
+                          if(res.statusCode == 200){
+                            var body = json.decode(res.body);
+                            return Network().uploadImage('/items/${body['id']}/images', _image);
+                          }
+                          throw res;
+                        }).then((res){
+                          print(res.statusCode);
+                          if(res.statusCode == 200){
                             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const MainScreen()));
                           }
                           _isLoading = false;
-                        });
+                        }).catchError((e) => print(e));
                       },
                       child: const Text('登録'),
                     ),
