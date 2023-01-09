@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_friends/item_rental_page.dart';
 import 'package:otaku_friends/models/item_model.dart';
 
 class ItemDetailPage extends StatelessWidget{
@@ -56,7 +57,13 @@ class ItemDetailPage extends StatelessWidget{
                   height: 50,
                   child: ElevatedButton(
                     child: const Text('借りる', style: TextStyle(fontSize: 20)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>
+                            ItemRentalPage(item: item)),
+                      );
+                    },
                   ),
                 ),
               )

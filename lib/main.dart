@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:otaku_friends/index_page.dart';
 
 void main() {
@@ -16,6 +17,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ja',''),
+        Locale('en',''),
+      ],
+      // locale: const Locale('ja', 'JP'),
       home: const IndexPage(),
     );
   }

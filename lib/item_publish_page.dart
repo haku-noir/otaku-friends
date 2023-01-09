@@ -130,7 +130,6 @@ class _ItemPublishPageState extends State<ItemPublishPage> {
                           }
                           throw res;
                         }).then((res){
-                          print(res.statusCode);
                           if(res.statusCode == 200){
                             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const MainScreen()));
                           }
