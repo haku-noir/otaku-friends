@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
+import 'main_screen.dart';
+import 'network.dart';
+
 class ItemPublishPage extends StatefulWidget {
   const ItemPublishPage({super.key});
 
@@ -10,8 +13,15 @@ class ItemPublishPage extends StatefulWidget {
 }
 
 class _ItemPublishPageState extends State<ItemPublishPage> {
+  bool _isLoading = false;
+
   File? _image;
   final picker = ImagePicker();
+
+  final _nameController = TextEditingController();
+  final _priceController = TextEditingController();
+  final _descriptionController = TextEditingController();
+  final _collateralController = TextEditingController();
 
   Future pickImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -25,7 +35,9 @@ class _ItemPublishPageState extends State<ItemPublishPage> {
   @override
   Widget build(BuildContext context) {
     // final List<String> typeList = ['漫画', '小説', 'ブルーレイ', 'CD'];
-    return Scaffold(
+    return _isLoading ? const Center(
+      child: CircularProgressIndicator(),
+    ) : Scaffold(
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -39,13 +51,20 @@ class _ItemPublishPageState extends State<ItemPublishPage> {
                   const SizedBox(height: 16),
                   TextFormField(
                     decoration: const InputDecoration(labelText: '名前'),
+                    controller: _nameController,
                     keyboardType: TextInputType.name,
                   ),
                   const SizedBox(height: 8),
                   TextFormField(
                     decoration: const InputDecoration(labelText: '料金'),
+                    controller: _priceController,
                     keyboardType: TextInputType.number,
-                    obscureText: true,
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: '担保金'),
+                    controller: _collateralController,
+                    keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: 16),
                   TextFormField(
@@ -56,6 +75,7 @@ class _ItemPublishPageState extends State<ItemPublishPage> {
                         borderRadius: BorderRadius.circular(10)
                       ),
                     ),
+                    controller: _descriptionController,
                     keyboardType: TextInputType.multiline,
                     maxLines: 6,
                   ),
@@ -91,7 +111,23 @@ class _ItemPublishPageState extends State<ItemPublishPage> {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: ()=>{},
+                      onPressed: () {
+                        final data = {
+                          'name': _nameController.text,
+                          'price': _priceController.text,
+                          'description': _descriptionController.text,
+                          'collateral': _collateralController.text
+                        };
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        Network().postData('/items', data).then((res){
+                          if(res.statusCode == 201){
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const MainScreen()));
+                          }
+                          _isLoading = false;
+                        });
+                      },
                       child: const Text('登録'),
                     ),
                   ),
