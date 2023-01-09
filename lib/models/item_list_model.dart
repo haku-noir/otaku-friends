@@ -18,7 +18,10 @@ class ItemListModel extends ChangeNotifier{
     body.forEach((item){
       List<String> imageUrlList = [];
       for (var image in item['images']) {
-        imageUrlList.add(image['image_url']);
+        imageUrlList.add(Network().convertImageUrl(image['image_url']));
+      }
+      if(imageUrlList.isEmpty){
+        imageUrlList.add('https://thumb.ac-illust.com/cf/cf8b964d27b4222926f632cda9ad5eb4_t.jpeg');
       }
       ItemModel itemModel = ItemModel(
         id: item['id'],
