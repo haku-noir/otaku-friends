@@ -5,7 +5,8 @@ import 'package:http/http.dart';
 
 class Network {
   // Androidシュミレーターを使う場合はlocalhostを10.0.2.2に変更する
-  final String _url = 'http://localhost:8080/api';
+  static const String _baseUrl = 'http://localhost:8080';
+  static const  String _url = '$_baseUrl/api';
   String token = '';
 
   // SharedPreferencesからトークンを取得
@@ -34,12 +35,10 @@ class Network {
   }
 
   Future<bool> login(data) async {
-    print(data);
     Uri fullUrl = Uri.parse('$_url/login');
     var res = await post(fullUrl, body: jsonEncode(data), headers: _getHeaders());
     if (res.statusCode == 200) {
       var body = json.decode(res.body);
-      print(body);
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['user']['api_token']));
       return true;
@@ -67,16 +66,6 @@ class Network {
     return res;
   }
 
-  // Future<Response> uploadImage(String apiUrl, image) async {
-  //   await _setToken();
-  //   // ここで画像をFileからBase64（String）にエンコードする
-  //   Uint8List imageBytes = image!.readAsBytesSync();
-  //   String imageBytesBase64 = base64Encode(imageBytes);
-  //
-  //   Uri fullUrl = Uri.parse(_url + apiUrl);
-  //   return await post(fullUrl, body: jsonEncode({image: imageBytesBase64}), headers: _getHeaders());
-  // }
-
   Future<StreamedResponse> uploadImage(String apiUrl, image) async {
     Uri fullUrl = Uri.parse(_url + apiUrl);
     var request = MultipartRequest('POST', fullUrl)
@@ -86,4 +75,9 @@ class Network {
     return await request.send();
   }
 
+  String convertImageUrl(String imageUrl){
+    imageUrl = imageUrl.replaceAll('file:///', '');
+    imageUrl = '$_baseUrl/storage/images/$imageUrl';
+    return imageUrl;
+  }
 }

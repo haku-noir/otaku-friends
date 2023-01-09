@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_friends/models/item_list_model.dart';
 import 'package:otaku_friends/user_information_page.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,10 @@ class _MainScreenState extends State<MainScreen>{
         controller: _controller,
         onPageChanged: (int index) => _onPageChanged(index),
         children: [
-          const ItemListPage(),
+          ChangeNotifierProvider(
+            create: (context) => ItemListModel(),
+            child: const ItemListPage(),
+          ),
           const ItemPublishPage(),
           ChangeNotifierProvider(
             create: (context) => UserModel(),
