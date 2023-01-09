@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_friends/user_information_page.dart';
+import 'package:provider/provider.dart';
 
 import 'item_list_page.dart';
 import 'item_publish_page.dart';
+import 'models/user_model.dart';
 
 class MainScreen extends StatefulWidget{
-  const MainScreen({super.key, required this.title});
-
-  final String title;
+  const MainScreen({super.key});
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -32,10 +33,9 @@ class _MainScreenState extends State<MainScreen>{
         children: [
           const ItemListPage(),
           const ItemPublishPage(),
-          Container(
-            child: const Center(
-              child: Text('ページ: アカウント'),
-            ),
+          ChangeNotifierProvider(
+            create: (context) => UserModel(),
+            child: const UserInformationPage(),
           ),
         ],
       ),

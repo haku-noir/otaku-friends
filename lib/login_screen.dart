@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:otaku_friends/main_screen.dart';
 
+import 'main_screen.dart';
 import 'network.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key, required this.title});
-
-  final String title;
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -31,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 // タイトル
                 Text(
-                  widget.title,
+                  'オタ友',
                   style: Theme.of(context).textTheme.headline4,
                 ),
                 const SizedBox(height: 16),
@@ -54,7 +52,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   width:double.infinity,
                   // ボタン（ログイン）
                   child: ElevatedButton(
-                    onPressed: _onLogin,
+                    onPressed: () {
+                      final data = {
+                        'email': _emailController.text,
+                        'password': _passwordController.text,
+                      };
+                      setState(() {
+                        _isLoading = true;
+                      });
+                      Network().login(data).then((state){
+                        if(state){
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen()));
+                        }
+                        _isLoading = false;
+                      });
+                    },
                     child: const Text('ログイン'),
                   ),
                 ),
@@ -72,21 +84,5 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
     );
-  }
-
-  void _onLogin(){
-    final data = {
-      'email': _emailController.text,
-      'password': _passwordController.text,
-    };
-    setState(() {
-      _isLoading = true;
-    });
-    Network().login(data).then((state){
-      if(state){
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen(title: widget.title,)));
-      }
-      _isLoading = false;
-    });
   }
 }

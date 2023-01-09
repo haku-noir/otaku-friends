@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const IndexPage(title: 'オタ友'),
+      home: const IndexPage(),
     );
   }
 }

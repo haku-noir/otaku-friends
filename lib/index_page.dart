@@ -5,17 +5,15 @@ import 'package:otaku_friends/main_screen.dart';
 import 'network.dart';
 
 class IndexPage extends StatelessWidget {
-  const IndexPage({super.key, required this.title});
-
-  final String title;
+  const IndexPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     Network().checkToken().then((isLoggedIn) {
       if (isLoggedIn) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => MainScreen(title: title,)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const MainScreen()));
       }else{
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => LoginScreen(title: title,)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const LoginScreen()));
       }
     });
     return const Center(

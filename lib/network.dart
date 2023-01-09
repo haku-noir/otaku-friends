@@ -46,6 +46,11 @@ class Network {
     return false;
   }
 
+  Future<void> logout() async {
+    SharedPreferences localStorage = await SharedPreferences.getInstance();
+    localStorage.remove('token');
+  }
+
   // POST
   Future<Response> postData(String apiUrl, data) async {
     await _setToken();
