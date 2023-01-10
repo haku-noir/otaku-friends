@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:otaku_friends/models/item_model.dart';
 
+import 'network.dart';
+
 class ItemRentalPage extends StatefulWidget{
   final ItemModel item;
   const ItemRentalPage({super.key, required this.item});
@@ -12,6 +14,7 @@ class ItemRentalPage extends StatefulWidget{
 
 class _ItemRentalPageState extends State<ItemRentalPage> {
   bool _isLoading = false;
+  bool _isMaching = false;
 
   DateTime _startDate = DateTime.now();
   DateTime _endDate = DateTime.now();
@@ -22,7 +25,7 @@ class _ItemRentalPageState extends State<ItemRentalPage> {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(false);
           },
           icon: const Icon(Icons.arrow_back),
         ),
@@ -71,13 +74,44 @@ class _ItemRentalPageState extends State<ItemRentalPage> {
                     },
                   ),
                   const SizedBox(height: 16),
+                  SwitchListTile(
+                    title: const Text('直接会って借りる'),
+                    value: _isMaching,
+                    onChanged: (bool state){
+                      setState(() {
+                        _isMaching = state;
+                      });
+                    },
+                    secondary: const Icon(Icons.people),
+                  ),
+                  const SizedBox(height: 16),
                   Text('合計: ${widget.item.price*(_endDate.difference(_startDate).inDays+1)} + ${widget.item.collateral}円', style: const TextStyle(fontSize: 30)),
                   const Text('期限までに返却した場合、担保金は返金されます。'),
                   const SizedBox(height: 16),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        final data = {
+                          'item_id': widget.item.id,
+                          'start_date': DateFormat('yyyy-MM-dd').format(_startDate),
+                          'end_date': DateFormat('yyyy-MM-dd').format(_endDate),
+                          'state': 0,
+                          'is_matching': _isMaching
+                        };
+                        setState(() {
+                          _isLoading = true;
+                        });
+                        Network().postData('/rentals', data).then((res){
+                          print(res.statusCode);
+                          if(res.statusCode == 200){
+                            Navigator.of(context).pop(true);
+                          }
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        });
+                      },
                       child: const Text('決定'),
                     ),
                   ),

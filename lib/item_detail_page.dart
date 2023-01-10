@@ -62,7 +62,15 @@ class ItemDetailPage extends StatelessWidget{
                         context,
                         MaterialPageRoute(builder: (context) =>
                             ItemRentalPage(item: item)),
-                      );
+                      ).then((isRental) {
+                        if (isRental != null && isRental) {
+                          const snackBar = SnackBar(
+                            content: Text('貸し出しが完了しました', style: TextStyle(fontSize: 20)),
+                            backgroundColor: Colors.green,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      });
                     },
                   ),
                 ),
