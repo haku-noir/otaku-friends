@@ -3,6 +3,7 @@ import 'package:otaku_friends/models/user_model.dart';
 import 'package:otaku_friends/network.dart';
 import 'package:provider/provider.dart';
 
+import 'borrow_item_list_page.dart';
 import 'index_page.dart';
 
 class UserInformationPage extends StatelessWidget {
@@ -45,6 +46,40 @@ class UserInformationPage extends StatelessWidget {
                         child: const Text('ログアウト'),
                       ),
                     ),
+                    const SizedBox(height: 16),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.red,
+                            ),
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) =>
+                                const BorrowItemListPage()),
+                              );
+                            },
+                            child: const Text('借りている物一覧'),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: Colors.white,
+                              backgroundColor: Colors.green,
+                            ),
+                            onPressed: () {
+                            },
+                            child: const Text('貸している物一覧'),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
