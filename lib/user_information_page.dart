@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_friends/lend_item_list_page.dart';
 import 'package:otaku_friends/models/user_model.dart';
 import 'package:otaku_friends/network.dart';
 import 'package:provider/provider.dart';
@@ -74,6 +75,11 @@ class UserInformationPage extends StatelessWidget {
                               backgroundColor: Colors.green,
                             ),
                             onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) =>
+                                const LendItemListPage()),
+                              );
                             },
                             child: const Text('貸している物一覧'),
                           ),

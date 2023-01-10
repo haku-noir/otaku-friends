@@ -11,8 +11,8 @@ class RentalListModel extends ChangeNotifier{
 
   List<RentalModel> get rentalList => _rentalList;
 
-  Future<void> fetchUserRentalList() async {
-    var res = await Network().getData('/user/rentals');
+  Future<void> fetchUserRentalList(String apiUrl) async {
+    var res = await Network().getData(apiUrl);
 
     _rentalList = [];
     var body = jsonDecode(res.body);
