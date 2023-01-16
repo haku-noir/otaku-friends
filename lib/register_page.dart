@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:otaku_friends/register_page.dart';
 
-import 'main_screen.dart';
 import 'network.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterPageState extends State<RegisterPage> {
   bool _isLoading = false;
+  final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -21,6 +20,15 @@ class _LoginScreenState extends State<LoginScreen> {
     return _isLoading ? const Center(
       child: CircularProgressIndicator(),
     ) : Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            icon: const Icon(Icons.arrow_back),
+          ),
+          title: const Text('新規登録'),
+        ),
         body: Center(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -34,6 +42,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   style: Theme.of(context).textTheme.headline4,
                 ),
                 const SizedBox(height: 16),
+                TextFormField(
+                  decoration: const InputDecoration(labelText: 'ユーザ名'),
+                  controller: _nameController,
+                  keyboardType: TextInputType.name,
+                ),
+                const SizedBox(height: 8),
                 // 入力フォーム（メールアドレス）
                 TextFormField(
                   decoration: const InputDecoration(labelText: 'メールアドレス'),
@@ -55,39 +69,21 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       final data = {
+                        'name': _nameController.text,
                         'email': _emailController.text,
                         'password': _passwordController.text,
                       };
                       setState(() {
                         _isLoading = true;
                       });
-                      Network().login(data).then((state){
+                      Network().register(data).then((state){
                         if(state){
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (_) => const MainScreen()));
+                          Navigator.of(context).pop(true);
                         }
                         _isLoading = false;
                       });
                     },
-                    child: const Text('ログイン'),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                SizedBox(
-                  width: double.infinity,
-                  // ボタン（新規登録）
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                          MaterialPageRoute(builder: (_) => const RegisterPage())
-                      ).then((isLoggedIn){
-                        if(isLoggedIn != null && isLoggedIn) {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (_) => const MainScreen()));
-                        }
-                      });
-                    },
-                    child: const Text('新規登録'),
+                    child: const Text('登録'),
                   ),
                 ),
               ],
