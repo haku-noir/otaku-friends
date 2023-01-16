@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:otaku_friends/item_rental_page.dart';
+import 'package:otaku_friends/models/item_model.dart';
 
 class ItemDetailPage extends StatelessWidget{
-  final String imageURL;
-  const ItemDetailPage({super.key, required this.imageURL});
+  final ItemModel item;
+  const ItemDetailPage({super.key, required this.item});
 
   @override
   Widget build(BuildContext context){
@@ -14,7 +16,7 @@ class ItemDetailPage extends StatelessWidget{
           },
           icon: const Icon(Icons.arrow_back),
         ),
-        title: const Text('映画の来場者特典'),
+        title: Text(item.name),
       ),
       body: Center(
         child:  Column(
@@ -26,19 +28,20 @@ class ItemDetailPage extends StatelessWidget{
                       SizedBox(
                         width: 400, height: 400,
                         child: Image.network(
-                          imageURL,
+                          item.imageUrlList[0],
                           fit: BoxFit.cover,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Column(
-                          children: const [
-                            Text("映画の来場者特典", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                            Text("200円/日", style: TextStyle(fontSize: 30)),
+                          children: [
+                            Text(item.name, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                            Text('${item.price}円/日', style: const TextStyle(fontSize: 30)),
+                            Text('担保金: ${item.collateral}円', style: const TextStyle(fontSize: 20)),
                             SizedBox(
                               width: double.infinity,
-                              child: Text("〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。〇〇映画の来場者特典です。", textAlign: TextAlign.left),
+                              child: Text(item.description, textAlign: TextAlign.left),
                             ),
                           ],
                         ),
@@ -54,7 +57,21 @@ class ItemDetailPage extends StatelessWidget{
                   height: 50,
                   child: ElevatedButton(
                     child: const Text('借りる', style: TextStyle(fontSize: 20)),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>
+                            ItemRentalPage(item: item)),
+                      ).then((isRental) {
+                        if (isRental != null && isRental) {
+                          const snackBar = SnackBar(
+                            content: Text('貸し出しが完了しました', style: TextStyle(fontSize: 20)),
+                            backgroundColor: Colors.green,
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        }
+                      });
+                    },
                   ),
                 ),
               )
