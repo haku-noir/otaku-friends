@@ -5,7 +5,8 @@ import 'package:http/http.dart';
 
 class Network {
   // Androidシュミレーターを使う場合はlocalhostを10.0.2.2に変更する
-  static const String _baseUrl = 'http://localhost';
+  // static const String _baseUrl = 'http://localhost';
+  static const String _baseUrl = 'http://54.178.38.83';
   static const  String _url = '$_baseUrl/api';
   String token = '';
 
