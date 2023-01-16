@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 
 class Network {
   // Androidシュミレーターを使う場合はlocalhostを10.0.2.2に変更する
-  static const String _baseUrl = 'http://localhost:8080';
+  static const String _baseUrl = 'http://localhost';
   static const  String _url = '$_baseUrl/api';
   String token = '';
 
@@ -32,6 +32,18 @@ class Network {
     String? localToken = localStorage.getString('token');
 
     return localToken != null;
+  }
+
+  Future<bool> register(data) async {
+    Uri fullUrl = Uri.parse('$_url/register');
+    var res = await post(fullUrl, body: jsonEncode(data), headers: _getHeaders());
+    if (res.statusCode == 200) {
+      var body = json.decode(res.body);
+      SharedPreferences localStorage = await SharedPreferences.getInstance();
+      localStorage.setString('token', json.encode(body['user']['api_token']));
+      return true;
+    }
+    return false;
   }
 
   Future<bool> login(data) async {
